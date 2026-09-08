@@ -1,8 +1,7 @@
 # Netlify build config —— Next.js（App Router + API 路由），Netlify Next Runtime v5 自动生效
 [build]
-  base = "site"
   command = "pnpm build"
-  publish = "site/.next"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
