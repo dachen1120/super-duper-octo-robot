@@ -1,0 +1,9 @@
+# Netlify 构建配置（Next.js App Router + API 路由；Netlify Next Runtime v5 自动生效）
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# NEXT_PUBLIC_ 环境变量已在 Netlify UI/CLI 设置，勿写入本文件
