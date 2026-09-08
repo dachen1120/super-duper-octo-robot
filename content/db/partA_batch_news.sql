@@ -1,0 +1,27 @@
+do $body$
+declare j jsonb := $json$
+{"generatedAt": "2026-09-07T12:00:00+08:00", "dialogue": {"title": "OpenAI 放大招，这周 AI 圈发生了什么？", "titleEn": "OpenAI's Big Move: What Happened in AI This Week?", "audio": {"src": "audio/dlg-ai-tech-2026-09-07.full.mp3", "durationMs": 159152, "voices": {"A": "en-US-GuyNeural", "B": "en-US-AriaNeural"}, "rate": "-8%", "gapMs": 420, "topicGapMs": 800}}, "news": [{"id": "n-20260907-01", "industryId": "ai-tech", "importance": 1, "headline": "OpenAI 发布新一代旗舰大模型 GPT-6 Astra，总裁布罗克曼称“AGI 时代到来”", "headlineEn": "OpenAI launches its new flagship model GPT-6 Astra; president Brockman says the AGI era has arrived", "summary": "北京时间 9 月 4 日凌晨，OpenAI 正式发布新一代旗舰大模型 GPT-6 Astra，在开发者社区公告中将其定义为“目前全球最智能、且对齐程度最高的模型”；联合创始人兼总裁布罗克曼在发布电话会议上直言“欢迎来到 AGI 时代”。媒体认为这是继 GPT-5 系列之后 OpenAI 最具分量的一次旗舰更新。", "summaryEn": "Early on Sept 4, Beijing time, OpenAI released GPT-6 Astra, calling it its most intelligent and best-aligned model. President Greg Brockman said, \"Welcome to the AGI era.\" Media call it OpenAI's biggest flagship update since GPT-5.", "tags": ["OpenAI", "GPT-6 Astra", "AGI"], "source": "搜狐科技", "sourceUrl": "https://www.sohu.com/a/1071858176_122512986", "updatedAt": "2026-09-04T15:28:00+08:00", "updatedLabel": "2026-09-04 15:28（北京时间）"}, {"id": "n-20260907-02", "industryId": "ai-tech", "importance": 2, "headline": "黄仁勋祝贺 OpenAI 发布 Astra 并称“AGI 已经到来”，AI 批评者马库斯反驳", "headlineEn": "Nvidia's Jensen Huang congratulates OpenAI, saying AGI is here; AI critic Gary Marcus pushes back", "summary": "9 月 7 日，英伟达创始人兼 CEO 黄仁勋在 X 平台发文祝贺 OpenAI 发布 Astra，称“AGI 已经到来”。AI 批评者加里·马库斯认为黄仁勋没有给出科学定义与证据，判断为时过早；OpenAI CEO 奥尔特曼则认为 AGI 是定义模糊、甚至“无关紧要的营销词”。", "summaryEn": "On Sept 7, Nvidia CEO Jensen Huang posted on X, congratulating OpenAI and declaring that AGI has arrived. AI critic Gary Marcus pushed back, saying Huang offered no scientific definition or proof. OpenAI CEO Sam Altman has called AGI a vague, even \"irrelevant marketing\" term.", "tags": ["NVIDIA", "Jensen Huang", "AGI", "Gary Marcus"], "source": "IT之家", "sourceUrl": "https://www.ithome.com/0/999/069.htm", "updatedAt": "2026-09-07T08:06:00+08:00", "updatedLabel": "2026-09-07 08:06（北京时间）"}, {"id": "n-20260907-03", "industryId": "ai-tech", "importance": 3, "headline": "联想携手英伟达发布 Yoga Pro 9n：本地可运行 1200 亿参数大模型", "headlineEn": "Lenovo and Nvidia unveil the Yoga Pro 9n, which runs 120-billion-parameter models locally", "summary": "IFA 2026 期间，联想在柏林 Lenovo Innovation World 发布旗舰 AI 笔记本 Lenovo Yoga Pro 9n（国内型号 YOGA Pro 15 Spark）。它搭载 NVIDIA RTX Spark 超级芯片，配备最高 128GB 统一内存，可本地运行最高 1200 亿参数、100 万 token 上下文的大语言模型，数据无需上传云端。", "summaryEn": "At Lenovo Innovation World during IFA 2026 in Berlin, Lenovo unveiled the Yoga Pro 9n AI laptop with Nvidia's RTX Spark chip and up to 128GB of unified memory. It can run large language models of up to 120 billion parameters with a 1M-token context, all on the device.", "tags": ["联想", "英伟达", "AI PC", "RTX Spark"], "source": "IT之家", "sourceUrl": "https://www.ithome.com/0/998/485.htm", "updatedAt": "2026-09-04T16:54:00+08:00", "updatedLabel": "2026-09-04 16:54（北京时间）"}, {"id": "n-20260907-04", "industryId": "ai-tech", "importance": 4, "headline": "Anthropic IPO 时间表后移：招股书或延至 9 月下旬，路演最早 10 月中旬启动", "headlineEn": "Anthropic delays its IPO: filing may slip to late September, roadshow starts in mid-October", "summary": "财联社 9 月 5 日援引知情人士称，Anthropic 原计划最快下周公开招股说明书，现预计推迟至 9 月下旬；招股书披露后，路演最早将于 10 月中旬启动，最终挂牌时间可能落在 11 月美国中期选举前几天。外媒称其为“史上最大 IPO”时间表有变。", "summaryEn": "Citing people familiar with the matter, Cailian Press reported on Sept 5 that Anthropic's IPO filing, originally expected as early as next week, may slip to late September. The roadshow could start in mid-October, and the listing may come days before the US midterm elections in November.", "tags": ["Anthropic", "IPO"], "source": "财联社", "sourceUrl": "https://api3.cls.cn/share/article/2474873?os=web&sv=698", "updatedAt": "2026-09-05T00:00:00+08:00", "updatedLabel": "2026-09-05（北京时间）"}]}
+$json$;
+  v_industry bigint; v_batch bigint; v_idx int;
+begin
+  select id into v_industry from public.industries where slug = 'ai-tech';
+  insert into public.content_batches
+    (industry_id, brief_date, status, title, title_en, full_audio_url, duration_ms, model, published_at)
+  values (v_industry, (j->>'generatedAt')::date, 'published', j->'dialogue'->>'title', j->'dialogue'->>'titleEn',
+          j->'dialogue'->'audio'->>'src', (j->'dialogue'->'audio'->>'durationMs')::int, 'manual-sample', now())
+  on conflict (industry_id, brief_date) do update set status='published', title=excluded.title, title_en=excluded.title_en,
+    full_audio_url=excluded.full_audio_url, duration_ms=excluded.duration_ms, model=excluded.model, published_at=excluded.published_at
+  returning id into v_batch;
+  delete from public.dialogue_turns where batch_id = v_batch;
+  delete from public.news_items where batch_id = v_batch;
+  for v_idx in 0 .. jsonb_array_length(j->'news') - 1 loop
+    insert into public.news_items
+      (batch_id, importance, headline_zh, headline_en, summary_zh, summary_en, tags, source_name, source_url, published_at)
+    values (v_batch,
+      (j->'news'->v_idx->>'importance')::int, j->'news'->v_idx->>'headline', j->'news'->v_idx->>'headlineEn',
+      j->'news'->v_idx->>'summary', j->'news'->v_idx->>'summaryEn',
+      coalesce(array(select jsonb_array_elements_text(j->'news'->v_idx->'tags')), '{}'::text[]),
+      j->'news'->v_idx->>'source', j->'news'->v_idx->>'sourceUrl',
+      (j->'news'->v_idx->>'updatedAt')::timestamptz);
+  end loop;
+end $body$;
